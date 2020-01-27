@@ -1,0 +1,580 @@
+<html>
+<head>
+    <title>Steamoven</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @keyframes spin {
+            from {
+                transform: rotateX(0deg);
+            } to {
+                transform: rotateX(360deg);
+            }
+        }
+
+        * {
+            box-sizing: border-box;;
+        }
+
+        .viewport {
+            display: inline-flex;
+            align-items: center;
+        }
+        .viewport:hover {
+            z-index: 999;
+        }
+        
+        body {
+            margin: 0;
+            background-color: #233;
+            font-family: 'Delius', cursive;
+            background-image: url(images/elements/cork-small.jpg);
+            background-size: 500px;
+        }
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            max-width: 1360px;
+            margin: auto;
+        }
+        .paper {
+            display: inline-block;
+            transition: transform .3s, box-shadow .3s;
+            box-shadow: 0 0 3px;
+            transform-style: preserve-3d;
+            position: relative;
+            background: white;
+            cursor: pointer;
+        }
+        .paper .pin {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(-255deg, #E1AA49, #FBF29D);
+            transform: translateZ(2px);
+            box-shadow: 0 0 2px;
+            border: 0 solid white;
+            border-top-width: 2px;
+            transition: transform .3s, box-shadow .3s, margin .3s;
+        }
+        .paper .label {
+            border-radius: 50%;
+            bottom: -20px;
+            right: -20px;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: red;
+            text-align: center;
+            box-shadow: 0 0 6px black;
+            transform: translateZ(10px);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            overflow: hidden;
+            transition: z-index 0 .15s;
+        }
+        .paper .label .text {
+            backface-visibility: hidden;
+        }
+        .paper.active .label {
+            z-index: -1;
+        }
+        .paper .label:after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(175deg, #FFF, #FFFFFF00);
+            background-position: 100% 0%;
+            background-repeat: no-repeat;
+            background-size: 200%;
+            width: 200%;
+            height: 100%;
+            transform: translateY(-60%) rotate(25deg);
+            top: 0;
+        }
+        .paper .back,
+        .paper .front {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+        .paper .back {
+            transform: rotateY(180deg);
+        }
+        .paper:hover {
+            transform: translateZ(20px);
+            box-shadow: 0 0 20px;
+            z-index: 999;
+        }
+        .paper:hover .pin {
+            transform: translateZ(-8px) translateY(-40px);
+            box-shadow: 0 0 20px;
+            margin: 0;
+            z-index: 99;
+        }
+        .paper.active {
+            transform: rotateY(180deg);
+        }
+        .paper.active .pin {
+            transform: translateZ(-8px) translateY(-40px) rotateY(-180deg);
+        }
+        .card {
+            width: 400px;
+            height: 243px;
+        }
+        .post-it {
+            background: #E8DB60;
+            width: 300px;
+            height: 300px;
+            padding: 20px;
+            font-size: 30px;
+        }
+        .polaroid {
+            background: white;
+            width: 350px;
+            height: 400px;
+        }
+        .brochure {
+            width: 500px;
+            height: 700px;
+        }
+        .post-it .text {
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+        .post-it:after {
+            backface-visibility: hidden;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: rgba(255,255,255,0.3);
+            transform: translateZ(-1px) rotateY(180deg);
+        }
+        .polaroid .image {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 320px;
+            height: 320px;
+            background-size: cover;
+            background-position: 50%;
+            backface-visibility: hidden;
+            background-color: black;
+        }
+        .polaroid:after {
+            content: '';
+            transform: translateZ(-1px) rotateY(180deg);
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 320px;
+            height: 320px;
+            background-size: cover;
+            background-position: 50%;
+            backface-visibility: hidden;
+            background-color: black;
+        }
+        .polaroid .text {
+            position: absolute;;
+            width: 100%;
+            bottom: 14px;
+            left: 0;
+            font-size: 30px;
+            text-align: center;
+            backface-visibility: hidden;
+        }
+        .paper .stamp {
+            font-family: sans-serif;
+            border-top: 20px solid red;
+            border-bottom: 20px solid red;
+            color: red;
+            position: absolute;
+            display: inline-block;
+            width: auto;
+            height: auto;
+            font-size: 60px;
+            transform:  translateY(100px) rotate(-45deg);
+        }
+        .sticker {
+            display: inline-block;
+            width: 300px;
+            margin: 30px;
+        }
+        .sticker img {
+            width: 100%;
+        }
+        .art {
+            height: auto;
+            background-color: white;
+        }
+        .art img {
+            width: 300px;
+        }
+        .art .front {
+            position: static;
+            width: 300px;
+            height: auto;
+        }
+        .art .text.back {
+            width: 100%;
+            transform: translateZ(-0.0001px) rotateY(180deg);
+            padding: 20px;
+            border: 20px solid lightgrey;
+        }
+        .phone {
+            width: 400px; /* 2436 1125 */
+            height: 790px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 70px;
+            box-shadow: 0 0 20px;
+            padding: 10px;
+        }
+        .phone img {
+            width: 100%;
+        }
+        .phone:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/elements/iphone.png');
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="viewport">
+            <div class="paper polaroid rotate-1">
+                <div class="image" style="background-image:url('images/photos/natt.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text">Hey there!</div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper post-it rotate--6">
+                <div class="text rotate-15">
+                    Welcome to my website!<br>
+                    Tap to flip items.
+                </div>
+            </div>
+        </div>
+        <div class="sticker rotate-3">
+            <img src="images/stickers/logo.svg">
+        </div>
+        <div class="viewport">
+            <div class="paper card rotate-5">
+                <img src="images/cards/pwa-front.jpg" class="front">
+                <img src="images/cards/pwa-back.jpg" class="back">
+                <div class="pin"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper card rotate--3">
+                <img src="images/cards/wbb-front.jpg" class="front">
+                <img src="images/cards/wbb-back.jpg" class="back">
+                <div class="pin"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-7">
+                <div class="image" style="background-image:url('images/photos/wbb.jpg')"></div>
+                <div class="pin"></div>
+                <div class="text">Flip for more info!</div>
+            </div>
+        </div>
+        <div class="sticker rotate-6">
+            <img src="images/stickers/flareon.png">
+        </div>
+        <div class="viewport">
+            <div class="paper brochure">
+                <img src="images/brochures/power-new.jpg" class="front">
+                <img src="images/brochures/power-old.jpg" class="back">
+                <div class="pin"></div>
+                <div class="label rotate--3"><span class="text">Flip for Original!</span></div>
+            </div>
+        </div>
+        <div class="sticker rotate--3">
+            <img src="images/stickers/jolteon.png">
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-7">
+                <div class="image" style="background-image:url('images/photos/ssc.jpg')"></div>
+                <div class="pin"></div>
+                <div class="text">Billboard</div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate--4">
+                <div class="image" style="background-image:url('images/photos/ssc-news.jpg'); background-position-x: 62%;"></div>
+                <div class="pin"></div>
+                <div class="text">Newspaper</div>
+            </div>
+        </div>
+        <div class="sticker rotate-2">
+            <img src="images/stickers/raichu.png">
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/keanu.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text">Keanu & Ava 😻</div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper art rotate--2">
+                <div class="text back">Testing some text</div>
+                <img class="front" src="images/art/ava-keanu-print.jpg">
+                <div class="pin"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper art rotate-2">
+                <img class="front" src="images/art/ghost.gif">
+                <div class="pin"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-4">
+                <div class="image" style="background-image:url('images/photos/zeeps-a.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/zeeps-b.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="phone rotate--5">
+            <img src="images/websites/zeeps.png">
+        </div>
+        <div class="viewport">
+            <div class="paper brochure rotate-3">
+                <img src="images/brochures/yer-a-poster-arry.jpg" class="front">
+                <div class="pin"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper brochure rotate--3">
+                <img src="images/brochures/olympics-trivia.jpg" class="front">
+                <div class="pin"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/harry.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="sticker rotate-3">
+            <img src="images/stickers/eevee.png">
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/tea-time.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/marina-cover.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/mag-gc.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/mag-layout.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/water.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/quarterdeck.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper polaroid rotate-9">
+                <div class="image" style="background-image:url('images/photos/quarterdeck2.jpg');"></div>
+                <div class="pin"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div class="viewport">
+            <div class="paper post-it rotate--6">
+                <div class="text rotate-15">
+                    Thanks for visiting!<br>
+                    Check out my socials below
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Delius&display=swap" rel="stylesheet">
+    <script>
+        var viewports = document.getElementsByClassName('viewport');
+        for (var i = 0; i < viewports.length; i++) {
+            viewports[i].style.perspective = (viewports[i].offsetHeight * 2) + 'px';
+        }
+
+        var papers = document.getElementsByClassName('paper');
+        for (var i = 0; i < papers.length; i++) {
+            papers[i].addEventListener('click', function() {
+                for (var i = 0; i < papers.length; i++) {
+                    if (papers[i] !== this) {
+                        papers[i].classList.remove('active');
+                    }
+                }
+                this.classList.toggle('active');
+            });
+        }
+
+        // TODO Post it flip
+        // Brochure flip
+        
+        // TODO full zoom mode
+
+        // TODO performance, hide non-visible elements?
+        // TODO performance, check image sizes
+    </script>
+    <style>
+        .rotate-1 {
+            transform: rotateZ(1deg);
+        }
+        .rotate-2 {
+            transform: rotateZ(2deg);
+        }
+        .rotate-3 {
+            transform: rotateZ(3deg);
+        }
+        .rotate-4 {
+            transform: rotateZ(4deg);
+        }
+        .rotate-5 {
+            transform: rotateZ(5deg);
+        }
+        .rotate-6 {
+            transform: rotateZ(6deg);
+        }
+        .rotate-7 {
+            transform: rotateZ(7deg);
+        }
+        .rotate-8 {
+            transform: rotateZ(8deg);
+        }
+        .rotate-9 {
+            transform: rotateZ(9deg);
+        }
+        .rotate-10 {
+            transform: rotateZ(10deg);
+        }
+        .rotate-11 {
+            transform: rotateZ(11deg);
+        }
+        .rotate-12 {
+            transform: rotateZ(12deg);
+        }
+        .rotate-13 {
+            transform: rotateZ(13deg);
+        }
+        .rotate-14 {
+            transform: rotateZ(14deg);
+        }
+        .rotate-15 {
+            transform: rotateZ(15deg);
+        }
+        .rotate--1 {
+            transform: rotateZ(-1deg);
+        }
+        .rotate--2 {
+            transform: rotateZ(-2deg);
+        }
+        .rotate--3 {
+            transform: rotateZ(-3deg);
+        }
+        .rotate--4 {
+            transform: rotateZ(-4deg);
+        }
+        .rotate--5 {
+            transform: rotateZ(-5deg);
+        }
+        .rotate--6 {
+            transform: rotateZ(-6deg);
+        }
+        .rotate--7 {
+            transform: rotateZ(-7deg);
+        }
+        .rotate--8 {
+            transform: rotateZ(-8deg);
+        }
+        .rotate--9 {
+            transform: rotateZ(-9deg);
+        }
+        .rotate--10 {
+            transform: rotateZ(-10deg);
+        }
+        .rotate--11 {
+            transform: rotateZ(-11deg);
+        }
+        .rotate--12 {
+            transform: rotateZ(-12deg);
+        }
+        .rotate--13 {
+            transform: rotateZ(-13deg);
+        }
+        .rotate--14 {
+            transform: rotateZ(-14deg);
+        }
+        .rotate--15 {
+            transform: rotateZ(-15deg);
+        }
+    </style>
+</body>
+</html>
