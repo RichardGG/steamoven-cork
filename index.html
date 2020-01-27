@@ -18,6 +18,22 @@
                 background-position: 0 100%;
             }
         }
+          
+          @keyframes dash {
+            from{
+              stroke-dashoffset: 0;
+            }
+            80% {
+              stroke-dashoffset: -340;
+              stroke-dasharray: 50 1000;
+            }
+            100%{
+              stroke-dashoffset: -340;
+              stroke-dasharray: 170 1000;
+          
+          
+            }
+          }
 
         * {
             box-sizing: border-box;;
@@ -257,6 +273,7 @@
             display: inline-block;
             width: 300px;
             margin: 30px;
+            position: relative;
         }
         .sticker.mini {
             width: 150px;
@@ -275,6 +292,23 @@
             background-image: url('images/elements/tape.png');
             background-size: contain;
             background-repeat: no-repeat;
+        }
+        .sticker .pin {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            margin-left: -7px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(-255deg, #E1AA49, #FBF29D);
+            transform: translateZ(2px);
+            box-shadow: 0 0 2px;
+            border: 0 solid white;
+            border-top-width: 2px;
+            transition: transform .3s, box-shadow .3s, margin .3s;
         }
         .art {
             height: auto;
@@ -332,11 +366,37 @@
         .font-30 {
             font-size: 30px;
         }
+        .footer {
+            color: #333;
+            font-size: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            background-color: white;
+            margin-top: 100px;
+            border-radius: 10px;
+            box-shadow: 0 0 4px;
+            text-decoration: none;
+            transform: scale(0.7);
+        }
+        .footer .text {
+            margin: 20px;
+        }
+        .rg-logo {
+            margin: 20px;
+        }
+        .rg-logo path, 
+        .rg-logo g {
+            stroke: #333;
+            stroke-dasharray: 50 1000;
+            animation: dash 3s linear infinite alternate;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Delius&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="wrapper">
+    <footer class="wrapper">
         <div class="viewport">
             <div class="paper polaroid rotate-1">
                 <div class="image" style="background-image:url('images/photos/natt.jpg');"></div>
@@ -676,12 +736,58 @@
         </div>
         <a class="sticker mini" href="https://facebook.com/steamovenart/" target="_blank">
             <img src="images/stickers/facebook.png">
+            <div class="pin"></div>
         </a>
         <a class="sticker mini" href="https://instagram.com/steamovenz/" target="_blank">
             <img src="images/stickers/instagram.png">
+            <div class="pin"></div>
         </a>
         <a class="sticker mini" href="https://linkedin.com/in/nmokwinski/" target="_blank">
             <img src="images/stickers/linkedin.png">
+            <div class="pin"></div>
+        </a>
+        <a href="https://richardgg.github.io/" target="_blank" class="footer">
+            <!-- <svg class="rg-logo" width="72" height="72" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#000" stroke-width="8" stroke-linecap="round" d="M11 54L11 36A32 32,0,0,1,55.24 6.43M61 36A18 18,0,1,1,25 36A18 18,0,1,1,61 36L61 50A18 18,0,0,1,43 68A32 32,0,0,1,30.75 65.56"/></svg>  -->
+            <svg version="1.1" baseProfile="full" class="rg-logo"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:ev="http://www.w3.org/2001/xml-events"
+  width="88" height="72">
+
+  <g fill="none" stroke="black" stroke-width="8" stroke-linecap="round">
+
+    <path d="
+
+      M 11 36
+      A 32 32, 0, 1, 0, 75 36
+      A 32 32, 0, 1, 0, 11 36
+      A 32 32, 0, 1, 0, 55.246 6.436
+
+      A 32 32, 0, 0, 0, 11 36
+      L 11 54
+
+      " />
+
+      <path d="
+
+
+        M 75 36
+        A 32 32, 0, 1, 0, 11 36
+        A 32 32, 0, 1, 0, 75 36
+        A 32 32, 0, 1, 0, 30.754 65.564
+
+        A 32 32, 0, 0, 0, 43 68
+        A 18 18, 0, 0, 0, 61 50
+        L 61 36
+        A 18 18, 0, 1, 0, 25 36
+        A 18 18, 0, 1, 0, 61 36
+
+         " />
+
+  </g>
+  </svg>
+
+            <span class="text">Made in collaboration with RichardG</span>
         </a>
     </div>
 
