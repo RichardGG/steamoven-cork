@@ -11,6 +11,14 @@
             }
         }
 
+        @keyframes scroll {
+            from {
+                background-position: 0 0%;
+            } to {
+                background-position: 0 100%;
+            }
+        }
+
         * {
             box-sizing: border-box;;
         }
@@ -135,12 +143,38 @@
             width: 400px;
             height: 243px;
         }
+        .raised {
+            transform: translateZ(2px);
+            backface-visibility: hidden;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .paper .post-it-mini {
+            background: #E8DB60;
+            width: 250px;
+            height: 250px;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -125px;
+            margin-top: -125px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .paper .post-it-mini .text {
+            position: static;
+            font-size: 20px;
+        }
         .post-it {
             background: #E8DB60;
             width: 300px;
             height: 300px;
-            padding: 20px;
-            font-size: 30px;
+            font-size: 25px;
         }
         .polaroid {
             background: white;
@@ -152,6 +186,7 @@
             height: 700px;
         }
         .post-it .text {
+            position: absolute;
             backface-visibility: hidden;
             display: flex;
             align-items: center;
@@ -159,6 +194,8 @@
             width: 100%;
             height: 100%;
             text-align: center;
+            flex-direction: column;
+            padding: 20px;
         }
         .post-it:after {
             backface-visibility: hidden;
@@ -221,8 +258,23 @@
             width: 300px;
             margin: 30px;
         }
+        .sticker.mini {
+            width: 150px;
+        }
         .sticker img {
             width: 100%;
+        }
+        .sticker .tape {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            top: -120px;
+            transform: rotate(-55deg) scale(0.5);        
+            background-image: url('images/elements/tape.png');
+            background-size: contain;
+            background-repeat: no-repeat;
         }
         .art {
             height: auto;
@@ -252,8 +304,14 @@
             box-shadow: 0 0 20px;
             padding: 10px;
         }
-        .phone img {
-            width: 100%;
+        .phone .website {
+            position: absolute;
+            top: 0;
+            left: 5%;
+            width: 90%;
+            height: 100%;
+            background-size: 100%;
+            animation: scroll 3s 3s infinite alternate;
         }
         .phone:after {
             content: '';
@@ -265,7 +323,17 @@
             background-image: url('images/elements/iphone.png');
             background-size: 100%;
         }
+        .font-60 {
+            font-size: 60px;
+        }
+        .font-40 {
+            font-size: 40px;
+        }
+        .font-30 {
+            font-size: 30px;
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Delius&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper">
@@ -274,18 +342,36 @@
                 <div class="image" style="background-image:url('images/photos/natt.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text">Hey there!</div>
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                I’m a Graphic Designer based in North Brisbane. My recent focus has been Print Production and Sessional Academia.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="viewport">
             <div class="paper post-it rotate--6">
-                <div class="text rotate-15">
-                    Welcome to my website!<br>
-                    Tap to flip items.
+                <div class="text">
+                    <span class="font-40">Welcome to my website!</span><br>
+                    <span class="font-30">Click/Tap to flip items.</span>
+                </div>
+                <div class="back">
+                    <div class="raised">
+                        <div class="text">
+                            <span class="font-60">👏🏻</span>
+                            <span class="font-40">Well Done!</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="sticker rotate-3">
-            <img src="images/stickers/logo.svg">
+            <img src="images/stickers/logo.png">
+            <div class="tape"></div>
         </div>
         <div class="viewport">
             <div class="paper card rotate-5">
@@ -303,6 +389,15 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate-7">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                Chrissy provided me with a clear brief for the design: simple, yet effective, specifically with Futura font, with dark pink and peach tones.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/wbb.jpg')"></div>
                 <div class="pin"></div>
                 <div class="text">Flip for more info!</div>
@@ -324,6 +419,15 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate-7">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                I was asked to help out with a billboard campaign St. Stephen’s College wanted to implement along Hope Island Rd on the Gold Coast.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/ssc.jpg')"></div>
                 <div class="pin"></div>
                 <div class="text">Billboard</div>
@@ -331,6 +435,15 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate--4">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                The second part of the campaign was to create print advertisements for the local newspaper.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/ssc-news.jpg'); background-position-x: 62%;"></div>
                 <div class="pin"></div>
                 <div class="text">Newspaper</div>
@@ -341,6 +454,15 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate-9">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                Cats
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/keanu.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text">Keanu & Ava 😻</div>
@@ -361,6 +483,15 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate-4">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                Zeeps was my final assessment during my third year whereby we were challenged to create an entrepreneurial proposal for 6-12 marketable products.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/zeeps-a.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
@@ -368,13 +499,22 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate-9">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                My product was Zeeps! 100% upcycled carry solutions with the intent of creating something new out of something old and abandoned.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/zeeps-b.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="phone rotate--5">
-            <img src="images/websites/zeeps.png">
+            <div class="website" style="background-image: url('images/websites/zeeps.png')"></div>
         </div>
         <div class="viewport">
             <div class="paper brochure rotate-3">
@@ -390,6 +530,15 @@
         </div>
         <div class="viewport">
             <div class="paper polaroid rotate-9">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                I took on a position as the Griffith University Student Guild Graphic Designer to help with their internal clubs’ design.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/harry.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
@@ -399,50 +548,113 @@
             <img src="images/stickers/eevee.png">
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
+            <div class="paper polaroid rotate--2">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                Although Tea Time was one of my earlier University projects, it stands to be one of the more creative outcomes I’ve produced.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/tea-time.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
+            <div class="paper polaroid rotate-10">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                My work relationship with Gold Coast City Marina & Shipyard began as an internship six months before I was due to graduate.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/marina-cover.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
+            <div class="paper polaroid rotate--5">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                My major task was to create a 70+ page, annual Marina magazine that showcases articles related to boating, fishing and general marina life.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/mag-gc.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
+            <div class="paper polaroid rotate--9">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                From scratch, we completed the project in two months and had thousands of copies printed for distribution locally and globally.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/mag-layout.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
+            <div class="paper polaroid rotate-4">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                I was given other projects during this time, which spanned from creating flyers, informative pamphlets and signage to creating advertisements for the other tenants of the marina.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/water.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
+            <div class="paper polaroid rotate-2">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                I was later taken in for a casual position where I was given the task of branding the new restaurant, Quarterdeck, opening next door to the main administration building at the marina.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image" style="background-image:url('images/photos/quarterdeck.jpg');"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
         </div>
         <div class="viewport">
-            <div class="paper polaroid rotate-9">
-                <div class="image" style="background-image:url('images/photos/quarterdeck2.jpg');"></div>
+            <div class="paper polaroid rotate--7">
+                <div class="back">
+                    <div class="raised">
+                        <div class="post-it-mini rotate--6">
+                            <div class="text">
+                                My first creation was the logo, which is still in use, and is located on the storefront, uniforms, print media and web/social media.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="image" style="background-image:url('images/photos/quarterdeck2.jpg'); background-position: 37% 0;"></div>
                 <div class="pin"></div>
                 <div class="text"></div>
             </div>
@@ -451,13 +663,28 @@
             <div class="paper post-it rotate--6">
                 <div class="text rotate-15">
                     Thanks for visiting!<br>
-                    Check out my socials below
+                    Why don't you check out my socials?
+                </div>
+                <div class="back">
+                    <div class="raised">
+                        <div class="text">
+                            <span class="font-60">👋🏻</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <a class="sticker mini" href="https://facebook.com/steamovenart/" target="_blank">
+            <img src="images/stickers/facebook.png">
+        </a>
+        <a class="sticker mini" href="https://instagram.com/steamovenz/" target="_blank">
+            <img src="images/stickers/instagram.png">
+        </a>
+        <a class="sticker mini" href="https://linkedin.com/in/nmokwinski/" target="_blank">
+            <img src="images/stickers/linkedin.png">
+        </a>
     </div>
 
-    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Delius&display=swap" rel="stylesheet">
     <script>
         var viewports = document.getElementsByClassName('viewport');
         for (var i = 0; i < viewports.length; i++) {
